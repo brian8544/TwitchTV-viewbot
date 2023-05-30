@@ -1,0 +1,4 @@
+# Ignore Python compilation files
+build/
+dist/
+main.spec
