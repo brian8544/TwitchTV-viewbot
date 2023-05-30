@@ -1,1 +1,1 @@
-pyinstaller --noconfirm --onedir --console --icon "icon.ico" --uac-admin --add-data "chromedriver.exe;."  "main.py"
+pyinstaller --noconfirm --onedir --console --uac-admin --add-data "chromedriver.exe;."  "main.py"
