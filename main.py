@@ -52,7 +52,7 @@ def main():
     chrome_options.add_argument("--mute-audio")  # Mute audio
     chrome_options.add_argument('--disable-dev-shm-usage')  # Disable shared memory usage
     chrome_options.binary_location = chrome_path  # Set the Chrome binary location
-    driver = webdriver.Chrome(executable_path=driver_path, chrome_options=chrome_options)  # Create a new Chrome webdriver
+    driver = webdriver.Chrome(options=chrome_options)  # Create a new Chrome webdriver
 
     driver.get(proxy_url)  # Open the selected proxy server in Chrome
 
