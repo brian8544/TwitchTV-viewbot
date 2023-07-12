@@ -4,4 +4,3 @@ selenium
 requests
 pyinstaller
 pip-upgrader
-
