@@ -4,13 +4,21 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import os
 import time
+import random
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-def main():
+# Function to select a random proxy server from the provided dictionary
+def selectRandom(proxy_servers):
+    return random.choice(list(proxy_servers.values()))
 
+# Main function
+def main():
     print("Copyright (c) 1998-2023")
     print("Brian Oost")
     print("All rights reserved.")
@@ -18,6 +26,7 @@ def main():
     
     print('')
 
+    # Dictionary containing proxy server options
     proxy_servers = {
         1: "https://www.blockaway.net",
         2: "https://www.croxyproxy.com",
@@ -28,8 +37,8 @@ def main():
         7: "https://www.croxyproxy.net",
     }
 
-    print("Please select a proxy server (1-7). 1 is recommended:")  # Selecting proxy server
-    
+    # Prompting the user to select a proxy server
+    print("Please select a proxy server (1-7). 1 is recommended:")
     proxy_choice = int(input("> "))  # User selects a proxy server by entering a number
     proxy_url = proxy_servers.get(proxy_choice)  # Retrieve the URL of the selected proxy server
 
@@ -39,34 +48,61 @@ def main():
     os.system("cls")  # Clear the console screen
 
     print("Creating virtual viewers now... Please wait.")
-  
+    print("Make sure 160p stream quality is available in the video player, or this application will crash!")
+
     chrome_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
     driver_path = 'chromedriver.exe'
 
-    chrome_options = webdriver.ChromeOptions()  # Set Chrome options for the webdriver
-    chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])  # Exclude certain switches from Chrome
-    chrome_options.add_argument('--disable-logging')  # Disable logging
-    chrome_options.add_argument('--log-level=3')  # Set log level to 3 (only fatal errors)
-    chrome_options.add_argument('--disable-extensions')  # Disable Chrome extensions
-    chrome_options.add_argument('--headless')  # Run Chrome in headless mode (without a graphical interface)
-    chrome_options.add_argument("--mute-audio")  # Mute audio
-    chrome_options.add_argument('--disable-dev-shm-usage')  # Disable shared memory usage
-    chrome_options.binary_location = chrome_path  # Set the Chrome binary location
-    driver = webdriver.Chrome(options=chrome_options)  # Create a new Chrome webdriver
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    chrome_options.add_argument('--disable-logging')
+    chrome_options.add_argument("--lang=en")
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--log-level=3')
+    chrome_options.add_argument('--disable-extensions')
+    chrome_options.add_argument("--mute-audio")
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    driver = webdriver.Chrome(options=chrome_options)
 
     driver.get(proxy_url)  # Open the selected proxy server in Chrome
 
     counter = 0  # Counter variable to keep track of the number of drivers created
 
+    # Loop to create virtual viewers using different proxy servers
     for i in range(proxy_count):
         try:
-            driver.execute_script("window.open('" + proxy_url + "')")  # Open a new tab in Chrome with the selected proxy server
-            driver.switch_to.window(driver.window_handles[-1])  # Switch to the newly opened tab
-            driver.get(proxy_url)  # Load the selected proxy server in the new tab
+            random_proxy_url = selectRandom(proxy_servers)  # Select a random proxy server for this tab
+            driver.execute_script("window.open('" + random_proxy_url + "')")
+            driver.switch_to.window(driver.window_handles[-1])
+            driver.get(random_proxy_url)
 
-            text_box = driver.find_element(By.ID, 'url')  # Find the URL input box on the proxy server page
-            text_box.send_keys(f'www.twitch.tv/{twitch_username}')  # Enter the Twitch channel URL in the input box
-            text_box.send_keys(Keys.RETURN)  # Press Enter to submit the URL
+            text_box = driver.find_element(By.ID, 'url')
+            text_box.send_keys(f'www.twitch.tv/{twitch_username}')
+            text_box.send_keys(Keys.RETURN)
+            time.sleep(10)
+
+            element_xpath = "//div[@data-a-target='player-overlay-click-handler']"
+
+            element = driver.find_element(By.XPATH, element_xpath)
+
+            actions = ActionChains(driver)
+
+            actions.move_to_element(element).perform()
+
+            time.sleep(15)  ## If you get errors in these parts, extend this time
+
+            ## 160P Settings
+            settings_button = driver.find_element(By.XPATH, "//button[@aria-label='Settings']")
+            settings_button.click()
+
+            wait = WebDriverWait(driver, 10)
+            quality_option = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[text()='Quality']")))
+            quality_option.click()
+
+            time.sleep(15)  ## If you get errors in these parts, extend this time
+        
+            resolution_option = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '160p')]")))
+            resolution_option.click()
 
             counter += 1  # Increment the counter for each driver created
             print(f"Virtual viewer {counter}/{proxy_count} spawned.")  # Print the counter and total count
