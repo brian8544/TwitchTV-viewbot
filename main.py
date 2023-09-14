@@ -48,7 +48,7 @@ def main():
     os.system("cls")  # Clear the console screen
 
     print("Creating virtual viewers now... Please wait.")
-    print("Make sure 160p stream quality is available in the video player, or this application will crash!")
+    #print("Make sure 160p stream quality is available in the video player, or this application will crash!")
 
     chrome_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
     driver_path = 'chromedriver.exe'
@@ -91,18 +91,18 @@ def main():
 
             time.sleep(15)  ## If you get errors in these parts, extend this time
 
-            ## 160P Settings
-            settings_button = driver.find_element(By.XPATH, "//button[@aria-label='Settings']")
-            settings_button.click()
+            ## Remove 160P Settings
+            # settings_button = driver.find_element(By.XPATH, "//button[@aria-label='Settings']")
+            # settings_button.click()
 
-            wait = WebDriverWait(driver, 10)
-            quality_option = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[text()='Quality']")))
-            quality_option.click()
+            # wait = WebDriverWait(driver, 10)
+            # quality_option = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[text()='Quality']")))
+            # quality_option.click()
 
-            time.sleep(15)  ## If you get errors in these parts, extend this time
+            # time.sleep(15)  ## If you get errors in these parts, extend this time
         
-            resolution_option = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '160p')]")))
-            resolution_option.click()
+            # resolution_option = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), '160p')]")))
+            # resolution_option.click()
 
             counter += 1  # Increment the counter for each driver created
             print(f"Virtual viewer {counter}/{proxy_count} spawned.")  # Print the counter and total count
