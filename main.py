@@ -65,7 +65,7 @@ def main():
     #chrome_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
     chromium_path = '/usr/bin/chromium-browser'
     #driver_path = 'chromedriver.exe'
-    driver_path = '/usr/bin/chromedriver'
+    chrome_driver_path = '/usr/bin/chromedriver'
 
     chrome_options.binary_location = chromium_path
     
