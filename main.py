@@ -10,6 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import os
 import time
 import random
+import platform  # Importe a biblioteca platform
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
@@ -45,7 +46,11 @@ def main():
     twitch_username = input("Enter your channel name (e.g., Asmongold): ")  # User enters their Twitch channel name
     proxy_count = int(input("Amount of viewers to create: "))  # User specifies the number of proxy sites to open
     
-    os.system("cls")  # Clear the console screen
+    if platform.system() == 'Windows':
+    os.system("cls")  # Limpar a tela no Windows
+    else:
+    os.system("clear")  # Limpar a tela em outros sistemas
+    #os.system("cls")  # Clear the console screen
 
     print("Creating virtual viewers now... Please wait.")
     
