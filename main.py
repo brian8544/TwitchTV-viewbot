@@ -64,13 +64,11 @@ def main():
     #chrome_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
     firefox_path = '/snap/bin/firefox'
     #driver_path = 'chromedriver.exe'
-    geckodriver_path = '/usr/local/bin/geckodriver'
+    firefox_driver_path = '/usr/local/bin/geckodriver'
     
-    driver_service = webdriver.firefox.service.Service(geckodriver_path)
-    driver_service.start()
-    driver = webdriver.Remote(driver_service.service_url, firefox_options=firefox_options)    
+    firefox_driver = webdriver.Firefox(options=firefox_options)    
 
-    driver.get(proxy_url)  # Open the selected proxy server in Chrome
+    firefox_driver.get(proxy_url)  # Open the selected proxy server in Chrome
 
     counter = 0  # Counter variable to keep track of the number of drivers created
 
@@ -78,21 +76,21 @@ def main():
     for i in range(proxy_count):
         try:
             random_proxy_url = selectRandom(proxy_servers)  # Select a random proxy server for this tab
-            driver.execute_script("window.open('" + random_proxy_url + "')")
-            driver.switch_to.window(driver.window_handles[-1])
-            driver.get(random_proxy_url)
+            firefox_driver.execute_script("window.open('" + random_proxy_url + "')")
+            firefox_driver.switch_to.window(driver.window_handles[-1])
+            firefox_driver.get(random_proxy_url)
 
-            text_box = driver.find_element(By.ID, 'url')
+            text_box = firefox_driver.find_element(By.ID, 'url')
             text_box.send_keys(f'www.twitch.tv/{twitch_username}')
             text_box.send_keys(Keys.RETURN)
             
             # Wait for the element to be present before proceeding
             element_xpath = "//div[@data-a-target='player-overlay-click-handler']"
-            wait = WebDriverWait(driver, 30)  # Adjust the timeout as needed
+            wait = WebDriverWait(firefox_driver, 30)  # Adjust the timeout as needed
             element = wait.until(EC.presence_of_element_located((By.XPATH, element_xpath)))
 
             # Continue with your actions on the element
-            actions = ActionChains(driver)
+            actions = ActionChains(firefox_driver)
             actions.move_to_element(element).perform()
 
             time.sleep(15)  # If you need to wait after interacting with the element
@@ -101,7 +99,7 @@ def main():
             print(f"Virtual viewer {counter}/{proxy_count} spawned.")  # Print the counter and total count
 
         except WebDriverException as e:
-            print("An error occurred while spawning a virtual viewer (Chrome driver):")
+            print("An error occurred while spawning a virtual viewer (Firefox driver):")
             print(e)
             break  # Exit the loop if an exception occurs
 
