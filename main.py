@@ -52,26 +52,26 @@ def main():
 
     print("Creating virtual viewers now... Please wait.")
 
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    chrome_options.add_argument('--disable-logging')
-    chrome_options.add_argument("--lang=en")
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--log-level=3')
-    chrome_options.add_argument('--disable-extensions')
-    chrome_options.add_argument("--mute-audio")
-    chrome_options.add_argument('--disable-dev-shm-usage')
+    firefox_options = webdriver.FirefoxOptions()
+    firefox_options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    firefox_options.add_argument('--disable-logging')
+    firefox_options.add_argument("--lang=en")
+    firefox_options.add_argument('--headless')
+    firefox_options.add_argument('--log-level=3')
+    firefox_options.add_argument('--disable-extensions')
+    firefox_options.add_argument("--mute-audio")
+    firefox_options.add_argument('--disable-dev-shm-usage')
     
     #chrome_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-    chromium_path = '/usr/bin/chromium-browser'
+    firefox_path = '/snap/bin/firefox'
     #driver_path = 'chromedriver.exe'
-    chrome_driver_path = '/usr/bin/chromedriver'
+    firefox_driver_path = '/usr/local/bin/geckodriver'
 
     chrome_options.binary_location = chromium_path
     
-    driver = webdriver.Chrome(options=chrome_options)    
+    firefox_driver = webdriver.Firefox(options=firefox_options)    
 
-    driver.get(proxy_url)  # Open the selected proxy server in Chrome
+    firefox_driver.get(proxy_url)  # Open the selected proxy server in Chrome
 
     counter = 0  # Counter variable to keep track of the number of drivers created
 
