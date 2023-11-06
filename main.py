@@ -69,7 +69,7 @@ def main():
 
     chrome_options.binary_location = chromium_path
     
-    driver = webdriver.Chrome(executable_path=chrome_driver_path, options=chrome_options)
+    driver = webdriver.Chrome(options=chrome_options)
 
     driver.get(proxy_url)  # Open the selected proxy server in Chrome
 
