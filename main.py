@@ -68,7 +68,7 @@ def main():
     
     driver = webdriver.Firefox(options=firefox_options)    
 
-    firefox_driver.get(proxy_url)  # Open the selected proxy server in Chrome
+    driver.get(proxy_url)  # Open the selected proxy server in Chrome
 
     counter = 0  # Counter variable to keep track of the number of drivers created
 
