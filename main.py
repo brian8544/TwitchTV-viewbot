@@ -61,8 +61,8 @@ def main():
     firefox_options.add_argument("--mute-audio")
     firefox_options.add_argument('--disable-dev-shm-usage')
     
-    #chrome_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-    firefox_path = '/snap/bin/firefox'
+    firefox_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+    #firefox_path = '/snap/bin/firefox'
     #driver_path = 'chromedriver.exe'
     firefox_driver_path = '/usr/local/bin/geckodriver'
     
