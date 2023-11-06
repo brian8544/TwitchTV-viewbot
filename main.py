@@ -10,7 +10,6 @@ from selenium.webdriver.support import expected_conditions as EC
 import os
 import time
 import random
-import platform  # Importe a biblioteca platform
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
@@ -24,7 +23,7 @@ def main():
     print("Brian Oost")
     print("All rights reserved.")
     print("https://brianoost.com/")
-    
+
     print('')
 
     # Dictionary containing proxy server options
@@ -45,67 +44,62 @@ def main():
 
     twitch_username = input("Enter your channel name (e.g., Asmongold): ")  # User enters their Twitch channel name
     proxy_count = int(input("Amount of viewers to create: "))  # User specifies the number of proxy sites to open
-    
-  
+
     os.system("clear")  # Limpar a tela em outros sistemas
-    #os.system("cls")  # Clear the console screen
 
     print("Creating virtual viewers now... Please wait.")
 
-    #chrome_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-    firefox_path = '/snap/bin/firefox'
-    #driver_path = 'chromedriver.exe'
-    firefox_driver_path = '/usr/local/bin/geckodriver'
-
+    # Configurando o geckodriver (Firefox)
     firefox_options = webdriver.FirefoxOptions()
-    firefox_options.add_argument('--disable-logging')
-    firefox_options.add_argument("--lang=en")
-    firefox_options.add_argument('--headless')
-    firefox_options.add_argument('--log-level=3')
-    firefox_options.add_argument('--disable-extensions')
+    firefox_options.headless = True
+    firefox_options.log.level = "error"
     firefox_options.add_argument("--mute-audio")
     firefox_options.add_argument('--disable-dev-shm-usage')
-    
-    firefox_driver = webdriver.Firefox(options=firefox_options)    
 
-    firefox_driver.get(proxy_url)  # Open the selected proxy server in Chrome
+    # Caminho para o geckodriver
+    geckodriver_path = '/usr/local/bin/geckodriver'
 
-    counter = 0  # Counter variable to keep track of the number of drivers created
+    # Inicialização do driver Firefox
+    driver = webdriver.Firefox(executable_path=geckodriver_path, options=firefox_options)
 
-    # Loop to create virtual viewers using different proxy servers
+    driver.get(proxy_url)  # Abre o servidor proxy selecionado no navegador Firefox
+
+    counter = 0  # Variável contador para acompanhar o número de drivers criados
+
+    # Loop para criar visualizadores virtuais usando diferentes servidores proxy
     for i in range(proxy_count):
         try:
-            random_proxy_url = selectRandom(proxy_servers)  # Select a random proxy server for this tab
-            firefox_driver.execute_script("window.open('" + random_proxy_url + "')")
-            firefox_driver.switch_to.window(driver.window_handles[-1])
-            firefox_driver.get(random_proxy_url)
+            random_proxy_url = selectRandom(proxy_servers)  # Seleciona um servidor proxy aleatório para esta guia
+            driver.execute_script("window.open('" + random_proxy_url + "')")
+            driver.switch_to.window(driver.window_handles[-1])
+            driver.get(random_proxy_url)
 
-            text_box = firefox_driver.find_element(By.ID, 'url')
+            text_box = driver.find_element(By.ID, 'url')
             text_box.send_keys(f'www.twitch.tv/{twitch_username}')
             text_box.send_keys(Keys.RETURN)
-            
-            # Wait for the element to be present before proceeding
+
+            # Aguarda a presença do elemento antes de prosseguir
             element_xpath = "//div[@data-a-target='player-overlay-click-handler']"
-            wait = WebDriverWait(firefox_driver, 30)  # Adjust the timeout as needed
+            wait = WebDriverWait(driver, 30)  # Ajuste o tempo limite conforme necessário
             element = wait.until(EC.presence_of_element_located((By.XPATH, element_xpath)))
 
-            # Continue with your actions on the element
-            actions = ActionChains(firefox_driver)
+            # Continue com suas ações no elemento
+            actions = ActionChains(driver)
             actions.move_to_element(element).perform()
 
-            time.sleep(15)  # If you need to wait after interacting with the element
+            time.sleep(15)  # Se você precisar esperar após interagir com o elemento
 
-            counter += 1  # Increment the counter for each driver created
-            print(f"Virtual viewer {counter}/{proxy_count} spawned.")  # Print the counter and total count
+            counter += 1  # Incrementa o contador para cada driver criado
+            print(f"Virtual viewer {counter}/{proxy_count} spawned.")  # Imprime o contador e o total
 
         except WebDriverException as e:
             print("An error occurred while spawning a virtual viewer (Firefox driver):")
             print(e)
-            break  # Exit the loop if an exception occurs
+            break
 
     input('All viewers have been created, press <CTRL+C> to exit this application when done streaming.\n')
-    
-    firefox_driver.quit()  # Close the Chrome webdriver
+
+    driver.quit()  # Fecha o driver do Firefox
 
 if __name__ == '__main__':
     main()
