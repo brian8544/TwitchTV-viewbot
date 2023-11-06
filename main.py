@@ -7,7 +7,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
 import os
 import time
 import random
@@ -70,8 +69,8 @@ def main():
 
     chrome_options.binary_location = chromium_path
     
-    #driver = webdriver.Chrome(options=chrome_options)
-    driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+    driver = webdriver.Chrome(options=chrome_options)
+    
 
     driver.get(proxy_url)  # Open the selected proxy server in Chrome
 
