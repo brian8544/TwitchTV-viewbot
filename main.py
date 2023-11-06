@@ -61,12 +61,12 @@ def main():
     firefox_options.add_argument("--mute-audio")
     firefox_options.add_argument('--disable-dev-shm-usage')
     
-    firefox_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-    #firefox_path = '/snap/bin/firefox'
+    #chrome_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+    firefox_path = '/snap/bin/firefox'
     #driver_path = 'chromedriver.exe'
-    firefox_driver_path = '/usr/local/bin/geckodriver'
+    driver_path = '/usr/local/bin/geckodriver'
     
-    firefox_driver = webdriver.Firefox(options=firefox_options)    
+    driver = webdriver.Firefox(options=firefox_options)    
 
     firefox_driver.get(proxy_url)  # Open the selected proxy server in Chrome
 
