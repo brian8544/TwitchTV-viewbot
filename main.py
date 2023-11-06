@@ -53,7 +53,6 @@ def main():
     print("Creating virtual viewers now... Please wait.")
 
     firefox_options = webdriver.FirefoxOptions()
-    firefox_options.add_experimental_option('excludeSwitches', ['enable-logging'])
     firefox_options.add_argument('--disable-logging')
     firefox_options.add_argument("--lang=en")
     firefox_options.add_argument('--headless')
