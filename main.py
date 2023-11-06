@@ -52,6 +52,11 @@ def main():
 
     print("Creating virtual viewers now... Please wait.")
 
+    #chrome_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+    firefox_path = '/snap/bin/firefox'
+    #driver_path = 'chromedriver.exe'
+    firefox_driver_path = '/usr/local/bin/geckodriver'
+
     firefox_options = webdriver.FirefoxOptions()
     firefox_options.add_argument('--disable-logging')
     firefox_options.add_argument("--lang=en")
@@ -60,11 +65,6 @@ def main():
     firefox_options.add_argument('--disable-extensions')
     firefox_options.add_argument("--mute-audio")
     firefox_options.add_argument('--disable-dev-shm-usage')
-    
-    #chrome_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-    firefox_path = '/snap/bin/firefox'
-    #driver_path = 'chromedriver.exe'
-    firefox_driver_path = '/usr/local/bin/geckodriver'
     
     firefox_driver = webdriver.Firefox(options=firefox_options)    
 
@@ -105,7 +105,7 @@ def main():
 
     input('All viewers have been created, press <CTRL+C> to exit this application when done streaming.\n')
     
-    driver.quit()  # Close the Chrome webdriver
+    firefox_driver.quit()  # Close the Chrome webdriver
 
 if __name__ == '__main__':
     main()
