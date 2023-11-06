@@ -46,9 +46,7 @@ def main():
     twitch_username = input("Enter your channel name (e.g., Asmongold): ")  # User enters their Twitch channel name
     proxy_count = int(input("Amount of viewers to create: "))  # User specifies the number of proxy sites to open
     
-    if platform.system() == 'Windows':
-    os.system("cls")  # Limpar a tela no Windows
-    else:
+  
     os.system("clear")  # Limpar a tela em outros sistemas
     #os.system("cls")  # Clear the console screen
 
