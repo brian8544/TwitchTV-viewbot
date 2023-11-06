@@ -64,9 +64,9 @@ def main():
     #chrome_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
     firefox_path = '/snap/bin/firefox'
     #driver_path = 'chromedriver.exe'
-    driver_path = '/usr/local/bin/geckodriver'
+    geckodriver_path = '/usr/local/bin/geckodriver'
     
-    driver = webdriver.Firefox(options=firefox_options)    
+    driver = webdriver.Firefox(executable_path=geckodriver_path, options=firefox_options)    
 
     driver.get(proxy_url)  # Open the selected proxy server in Chrome
 
