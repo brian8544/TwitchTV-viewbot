@@ -65,8 +65,6 @@ def main():
     firefox_path = '/snap/bin/firefox'
     #driver_path = 'chromedriver.exe'
     firefox_driver_path = '/usr/local/bin/geckodriver'
-
-    chrome_options.binary_location = chromium_path
     
     firefox_driver = webdriver.Firefox(options=firefox_options)    
 
