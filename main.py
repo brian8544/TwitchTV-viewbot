@@ -51,13 +51,7 @@ def main():
     #os.system("cls")  # Clear the console screen
 
     print("Creating virtual viewers now... Please wait.")
-    
-    #chrome_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-    chromium_path = '/usr/bin/chromium-browser'
-    #driver_path = 'chromedriver.exe'
-    driver_path = '/usr/bin/chromedriver'
 
-    chrome_options.binary_location = chromium_path
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
     chrome_options.add_argument('--disable-logging')
@@ -67,6 +61,14 @@ def main():
     chrome_options.add_argument('--disable-extensions')
     chrome_options.add_argument("--mute-audio")
     chrome_options.add_argument('--disable-dev-shm-usage')
+    
+    #chrome_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+    chromium_path = '/usr/bin/chromium-browser'
+    #driver_path = 'chromedriver.exe'
+    driver_path = '/usr/bin/chromedriver'
+
+    chrome_options.binary_location = chromium_path
+    
     driver = webdriver.Chrome(executable_path=chrome_driver_path, options=chrome_options)
 
     driver.get(proxy_url)  # Open the selected proxy server in Chrome
