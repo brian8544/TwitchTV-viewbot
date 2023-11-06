@@ -52,8 +52,10 @@ def main():
 
     print("Creating virtual viewers now... Please wait.")
     
-    chrome_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-    driver_path = 'chromedriver.exe'
+    #chrome_path = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+    chrome_path = '/usr/bin/chromium-browser'
+    #driver_path = 'chromedriver.exe'
+    driver_path = '/usr/bin/chromedriver'
 
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
